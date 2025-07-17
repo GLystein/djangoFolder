@@ -16,3 +16,7 @@ class ListOfSubscribersDetail(generics.RetrieveUpdateDestroyAPIView):
 class ListOfScripturePostCreate(generics.ListCreateAPIView):
     queryset = ListOfScripturePost.objects.all()
     serializer_class = ListOfScripturePostSerializer
+
+class ListOfScripturePostDelete(generics.DestroyAPIView):
+    queryset = ListOfScripturePost.objects.all()
+    serializer_class = ListOfScripturePostSerializer
