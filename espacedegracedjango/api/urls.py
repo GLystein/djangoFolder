@@ -8,5 +8,6 @@ urlpatterns = [
     path("listofsubscribers/", views.ListOfSubscribersCreate.as_view(), name='list-of-subcribers'),
     path('listofsubscribers/<int:pk>/', ListOfSubscribersDetail.as_view(), name='list Of Subscribers Detail'),
     path('listofscripturepost/', views.ListOfScripturePostCreate.as_view(), name='list of scripture post'),
-    path('listofscripturepostdelete/<int:pk>', ListOfScripturePostDelete.as_view(), name='Post scripture deletion')
+    path('listofscripturepostdelete/<int:id>/', ListOfScripturePostDelete.as_view(), name='Post scripture deletion')
+    # path('scripturepost', views.ScripturesListAPIView.as_view(), name='delete one scripture')
 ]

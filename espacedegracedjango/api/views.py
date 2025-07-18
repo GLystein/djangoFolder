@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
+
 from .models import ListOfSubscribers
 from .serializers import ListOfSubscribersSerializer
 from .models import ListOfScripturePost
@@ -17,6 +19,12 @@ class ListOfScripturePostCreate(generics.ListCreateAPIView):
     queryset = ListOfScripturePost.objects.all()
     serializer_class = ListOfScripturePostSerializer
 
-class ListOfScripturePostDelete(generics.DestroyAPIView):
+class ListOfScripturePostDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = ListOfScripturePost.objects.all()
     serializer_class = ListOfScripturePostSerializer
+    lookup_url_kwarg = 'id'
+
+# class ListOfScripturePostUpdate(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = ListOfScripturePost.objects.all()
+#     serializer_class = ListOfScripturePostSerializer
+#     lookup_url_kwarg = 'id'
