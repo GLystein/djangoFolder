@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-kbckm^wgth!8&#q79+4o5x7eajh*g9_0rw990+ham5sd$yw+-%
 DEBUG = True
 
 # ALLOWED_HOSTS = ['100.101.2.174', 'your_local_ip_address']
-ALLOWED_HOSTS = ['80bf7e64a8e1.ngrok-free.app','127.0.0.1', 'localhost', 'jrhitech.com', 'ngrok.io']
+# ALLOWED_HOSTS = ['80bf7e64a8e1.ngrok-free.app','127.0.0.1', 'localhost', 'jrhitech.com', 'ngrok.io']
+ALLOWED_HOSTS = ['joellys.pythonanywhere.com','127.0.0.1', 'localhost']
 CORS_ALLOWED_ORIGINS = [
         'http://localhost:3000',
         'https://80bf7e64a8e1.ngrok-free.app',
