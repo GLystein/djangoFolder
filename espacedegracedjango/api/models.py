@@ -10,13 +10,29 @@ class ListOfSubscribers(models.Model):
     def __str__(self):
         return self.firstName
 
-class ListOfScripturePost(models.Model):
+class ListOfScripture(models.Model):
     author = models.CharField(max_length=100)
     topic = models.CharField(max_length=250)
     category = models.CharField(max_length=100)
     date = models.DateTimeField()
     # public = models.
-    message = models.CharField(max_length=500)
+    message = models.TextField()
 
     def __str__(self):
         return self.author
+
+class StoreProductItems(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+class ThemeCategory(models.Model):
+    theme = models.CharField(max_length=40)
+    author = models.CharField(max_length=25)
+    timeStamped = models.DateTimeField()
+
+    def __str__(self):
+        return self.name
