@@ -10,6 +10,8 @@ from .serializers import StoreProductItemsSerializer
 from .models import StoreProductItems
 from .models import ThemeCategory
 from .serializers import ThemeScriptureSerializer
+from .serializers import UpcomingEventsSerializer
+from .models import UpcomingEvents
 
 # --------------------------------------------SUBSCRIBERS--------------------------------------------------------
 class ListOfSubscribersCreate(generics.ListCreateAPIView):
@@ -43,7 +45,7 @@ class StoreProductItemsCreateAPIView(generics.CreateAPIView):
     serializer_class = StoreProductItemsSerializer
 
 # VIEWING LIST OF PRODUCT ITEM
-class StoreProductItemsList(generics.ListCreateAPIView):
+class ItemsList(generics.ListCreateAPIView):
     queryset = StoreProductItems.objects.all()
     serializer_class = StoreProductItemsSerializer
 
@@ -61,3 +63,8 @@ class ThemeScripture(generics.CreateAPIView):
 class ThemeList(generics.ListCreateAPIView):
     queryset = ThemeCategory.objects.all();
     serializer_class = ThemeScriptureSerializer
+
+
+class GetUpcomingEvents(generics.ListCreateAPIView):
+    queryset = UpcomingEvents.objects.all();
+    serializer_class = UpcomingEventsSerializer

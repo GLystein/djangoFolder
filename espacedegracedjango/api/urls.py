@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import ListOfScriptureCreate, ListOfSubscribersDetail, ListOfScripturePostDelete, StoreProductItemsCreateAPIView, StoreProductItemsList, AddingScripturePosting
+from .views import ListOfScriptureCreate, ListOfSubscribersDetail, ListOfScripturePostDelete, \
+    StoreProductItemsCreateAPIView, ItemsList, AddingScripturePosting, GetUpcomingEvents
 from .views import ThemeScripture, ThemeList
 
 # from .views import
@@ -12,8 +13,10 @@ urlpatterns = [
     path('listofscripturepostdelete/<int:id>/', ListOfScripturePostDelete.as_view(), name='Post scripture deletion'),
     path('addingscripture/',AddingScripturePosting.as_view(), name='Adding new object using post method'),
     path('storeproductitems/', StoreProductItemsCreateAPIView.as_view(), name='Store-create' ),
-    path('storeproductitemslist', StoreProductItemsList.as_view(), name='list of the product'),
+    # path('storeproductitems/', StoreProductItemsCreateAPIView.as_view(), name='Store-create'),
+    path('itemsprodlist/', ItemsList.as_view(), name='list of the product'),
     path('addingthemecategory/', ThemeScripture.as_view(), name='Adding Theme' ),
-    path('themelist/',ThemeList.as_view(), name='List of Theme')
+    path('themelist/',ThemeList.as_view(), name='List of Theme'),
+    path('getallupcomingevents/', GetUpcomingEvents.as_view(), name='Get all the upcoming events')
     # path('scripturepost', views.ScripturesListAPIView.as_view(), name='delete one scripture')
 ]

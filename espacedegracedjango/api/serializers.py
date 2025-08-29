@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import ListOfSubscribers
 from .models import ListOfScripture
 from .models import StoreProductItems
-from. models import ThemeCategory
+from .models import ThemeCategory
+from .models import UpcomingEvents
 
 class ListOfSubscribersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,4 +23,9 @@ class StoreProductItemsSerializer(serializers.ModelSerializer):
 class ThemeScriptureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ThemeCategory
+        fields = '__all__'
+
+class UpcomingEventsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UpcomingEvents
         fields = '__all__'
