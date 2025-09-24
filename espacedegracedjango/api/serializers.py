@@ -1,19 +1,22 @@
 from rest_framework import serializers
-from .models import ListOfSubscribers
-from .models import ListOfScripture
+from .models import SubscribersList
+from .models import ScriptureList
 from .models import StoreProductItems
 from .models import ThemeCategory
 from .models import UpcomingEvents
+from .models import SlideshowsImage
 
-class ListOfSubscribersSerializer(serializers.ModelSerializer):
+class SubscribersListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ListOfSubscribers
-        fields = ["id", "firstName", "lastName", "email","subscribType", "startedDate"]
+        model = SubscribersList
+        # fields = ["id", "firstName", "lastName", "email","subscribType", "startedDate"]
+        fields = '__all__'
 
-class ListOfScriptureSerializer(serializers.ModelSerializer):
+class ScriptureListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ListOfScripture
-        fields = ["id", "author","topic", "category", "date", "message"]
+        model = ScriptureList
+        # fields = ["id", "author","topic", "category", "date", "message"]
+        fields = '__all__'
 
 class StoreProductItemsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,4 +31,8 @@ class ThemeScriptureSerializer(serializers.ModelSerializer):
 class UpcomingEventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UpcomingEvents
+        fields = '__all__'
+class SlideshowsImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SlideshowsImage
         fields = '__all__'
