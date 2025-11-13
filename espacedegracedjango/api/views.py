@@ -44,7 +44,13 @@ class AddingScripturePosting(generics.CreateAPIView):
 
 # ---------------------------------------STORE PRODUCT ITEMS API--------------------------------------------------------
 # POST METHOD API FOR PRODUCT ITEM
-class StoreItems(generics.CreateAPIView):
+# class StoreItems(generics.CreateAPIView): # need to change this to ListCreateAPIView
+class StoreItems(generics.ListCreateAPIView):
+    queryset = StoreProductItems.objects.all()
+    serializer_class = StoreProductItemsSerializer
+
+# Store Items Deletion
+class ItemsDeletion(generics.RetrieveUpdateDestroyAPIView):
     queryset = StoreProductItems.objects.all()
     serializer_class = StoreProductItemsSerializer
 

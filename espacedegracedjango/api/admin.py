@@ -5,6 +5,7 @@ from .models import StoreProductItems
 from .models import UpcomingEvents
 from .models import ThemeCategory
 from .models import SlideshowsImage
+from .models import StoreProductItems
 
 # Register your models here.
 admin.site.register(ScriptureList)
@@ -12,3 +13,4 @@ admin.site.register(SubscribersList)
 admin.site.register(StoreProductItems)
 admin.site.register(UpcomingEvents)
 admin.site.register(SlideshowsImage)
+# admin.site.register()

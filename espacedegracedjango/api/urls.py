@@ -15,7 +15,7 @@ urlpatterns = [
     path('scripturepostlist/', ScriptureListCreate.as_view(), name='list of scripture post'),
     path('scripturepostdelete/<int:id>/', ScripturePostDelete.as_view(), name='Post scripture deletion'),
 
-    #
+    # STORE API
     path('storeproductslist/', StoreItems.as_view(), name='Store Product List' ),
     # path('storeproductitems/', StoreProductItemsCreateAPIView.as_view(), name='Store-create'),
     # path('itemsprodlist/', ItemsList.as_view(), name='list of the product'),

@@ -28,6 +28,10 @@ class StoreProductItems(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     itemImage = models.ImageField(default='fallback.jpg',blank=True)
     ratings = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    brand = models.CharField(max_length=100, blank=True)
+    category = models.CharField(max_length=100, blank=True)
+    countInStock = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    numReviews = models.DecimalField(max_digits=10, decimal_places=0, default=0)
 
     def __str__(self):
         return self.name
