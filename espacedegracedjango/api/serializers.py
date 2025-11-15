@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SubscribersList
+from .models import SubscribersList, LastestEpisodes
 from .models import ScriptureList
 from .models import StoreProductItems
 from .models import ThemeCategory
@@ -35,4 +35,8 @@ class UpcomingEventsSerializer(serializers.ModelSerializer):
 class SlideshowsImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SlideshowsImage
+        fields = '__all__'
+class LastestEpisodesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LastestEpisodes
         fields = '__all__'

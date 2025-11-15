@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics,viewsets, parsers
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
-from .models import SubscribersList
-from .serializers import SubscribersListSerializer
+from .models import SubscribersList, LastestEpisodes
+from .serializers import SubscribersListSerializer, LastestEpisodesSerializer
 from .models import ScriptureList
 from .serializers import ScriptureListSerializer
 from .serializers import StoreProductItemsSerializer
@@ -97,3 +97,9 @@ class SlideShowPost(generics.CreateAPIView):
 class slideShowDeletion(generics.RetrieveUpdateDestroyAPIView):
     queryset = SlideshowsImage.objects.all();
     serializer_class = SlideshowsImageSerializer
+
+
+#-------------------------------------Last Episode--------------------------------------------------------------
+class LastestEpisodesList(generics.ListCreateAPIView):
+    queryset = LastestEpisodes.objects.all();
+    serializer_class = LastestEpisodesSerializer

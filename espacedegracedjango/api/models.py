@@ -53,3 +53,10 @@ class UpcomingEvents(models.Model):
 class SlideshowsImage(models.Model):
     sliderImage = models.ImageField(default='fallback.jpg', blank=True)
     topic = models.CharField(max_length=300,default='NA', blank=True)
+
+class LastestEpisodes(models.Model):
+    title = models.CharField(max_length=100)
+    summary = models.CharField(max_length=200)
+    guestSpeaker = models.CharField(max_length=40)
+    publicationDate = models.DateTimeField(blank=True)
+    thumbnail = models.ImageField(default='fallback.jpg', blank=True)

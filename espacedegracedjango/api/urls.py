@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import ScriptureListCreate, SubscribersListDetail, ScripturePostDelete
+from .views import ScriptureListCreate, SubscribersListDetail, ScripturePostDelete, LastestEpisodesList
 from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsDeletion
 from .views import ThemeScripture, ThemeList, SlideList, SlideShowPost, slideShowDeletion
 
@@ -31,6 +31,10 @@ urlpatterns = [
     # Slideshow event urls
     path('getslideshow/',SlideList.as_view(), name='get all the slideshow'),
     path('postslideshow/', SlideShowPost.as_view(),name='post all the slideshow'),
-    path('slideshowdeletion/<int:pk>', slideShowDeletion.as_view(), name='Delete a post the slideshow')
+    path('slideshowdeletion/<int:pk>', slideShowDeletion.as_view(), name='Delete a post the slideshow'),
     # path('scripturepost', views.ScripturesListAPIView.as_view(), name='delete one scripture')
-]
+
+    # Last Episode
+    path('lastepisodegetlist/',LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5')
+
+    ]
