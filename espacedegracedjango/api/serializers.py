@@ -5,6 +5,7 @@ from .models import StoreProductItems
 from .models import ThemeCategory
 from .models import UpcomingEvents
 from .models import SlideshowsImage
+from .models import UpcomingEvents
 
 class SubscribersListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,4 +40,8 @@ class SlideshowsImageSerializer(serializers.ModelSerializer):
 class LastestEpisodesSerializer(serializers.ModelSerializer):
     class Meta:
         model = LastestEpisodes
+        fields = '__all__'
+class EventsUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UpcomingEvents
         fields = '__all__'

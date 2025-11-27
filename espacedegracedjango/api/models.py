@@ -23,9 +23,9 @@ class ScriptureList(models.Model):
         return self.name
 
 class StoreProductItems(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    name = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
     itemImage = models.ImageField(default='fallback.jpg',blank=True)
     ratings = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     brand = models.CharField(max_length=100, blank=True)
@@ -45,9 +45,9 @@ class ThemeCategory(models.Model):
         return self.name
 
 class UpcomingEvents(models.Model):
-    dateOfPublication = models.CharField(max_length=12)
-    topic = models.CharField(max_length=50)
-    description = models.CharField(max_length=300)
+    dateOfPublication = models.CharField(max_length=12,blank=True)
+    topic = models.CharField(max_length=50,blank=True)
+    description = models.CharField(max_length=300, blank=True)
     image = models.ImageField(default='fallback.jpg', blank=True)
 
 class SlideshowsImage(models.Model):

@@ -53,6 +53,7 @@ class StoreItems(generics.ListCreateAPIView):
 class ItemsDeletion(generics.RetrieveUpdateDestroyAPIView):
     queryset = StoreProductItems.objects.all()
     serializer_class = StoreProductItemsSerializer
+    lookup_url_kwarg = 'id'
 
 # VIEWING LIST OF PRODUCT ITEM
 # class ItemsDetails(generics.ListCreateAPIView):
@@ -81,7 +82,8 @@ class GetUpcomingEvents(generics.ListCreateAPIView):
     queryset = UpcomingEvents.objects.all();
     serializer_class = UpcomingEventsSerializer
 
-class EventsDeletion(generics.RetrieveUpdateDestroyAPIView):
+class EventsUpdate(generics.RetrieveUpdateDestroyAPIView):
+# class EventsDeletion(generics.RetrieveUpdateDestroyAPIView):
     queryset = UpcomingEvents.objects.all();
     serializer_class = UpcomingEventsSerializer
 
@@ -100,6 +102,7 @@ class slideShowDeletion(generics.RetrieveUpdateDestroyAPIView):
 
 
 #-------------------------------------Last Episode--------------------------------------------------------------
-class LastestEpisodesList(generics.ListCreateAPIView):
+class LastestEpisodesList(generics.RetrieveUpdateDestroyAPIView):
+# class LastestEpisodesList(generics.ListCreateAPIView):
     queryset = LastestEpisodes.objects.all();
     serializer_class = LastestEpisodesSerializer

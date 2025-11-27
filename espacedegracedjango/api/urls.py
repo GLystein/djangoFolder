@@ -1,8 +1,9 @@
 from django.urls import path
 from . import views
 from .views import ScriptureListCreate, SubscribersListDetail, ScripturePostDelete, LastestEpisodesList
-from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsDeletion
+from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsUpdate
 from .views import ThemeScripture, ThemeList, SlideList, SlideShowPost, slideShowDeletion
+from .views import ItemsDeletion
 
 # from .views import
 
@@ -11,12 +12,13 @@ urlpatterns = [
     path('subscribersdetails/<int:pk>/', SubscribersListDetail.as_view(), name='list Of Subscribers Detail'),
 
     #
-    path('addingscripture/',AddingScripturePosting.as_view(), name='Adding new object using post method'),
-    path('scripturepostlist/', ScriptureListCreate.as_view(), name='list of scripture post'),
-    path('scripturepostdelete/<int:id>/', ScripturePostDelete.as_view(), name='Post scripture deletion'),
+    path('addingscripture/',AddingScripturePosting.as_view(), name='Adding new scripture punlication'),
+    path('scripturepostlist/', ScriptureListCreate.as_view(), name='list of scripture published'),
+    path('scripturepostdelete/<int:id>/', ScripturePostDelete.as_view(), name='Scripture deletion'),
 
     # STORE API
     path('storeproductslist/', StoreItems.as_view(), name='Store Product List' ),
+    path('itemsdeletion/<int:id>/', ItemsDeletion.as_view(), name='Delete an Item product in the store' ),
     # path('storeproductitems/', StoreProductItemsCreateAPIView.as_view(), name='Store-create'),
     # path('itemsprodlist/', ItemsList.as_view(), name='list of the product'),
 
@@ -26,7 +28,8 @@ urlpatterns = [
 
     # -- Upcoming event urls
     path('getallupcomingevents/', GetUpcomingEvents.as_view(), name='Get all the upcoming events'),
-    path('eventdeletion/<int:pk>', EventsDeletion.as_view(), name='Delete upcoming events'),
+    path('eventupdate/<int:pk>/', EventsUpdate.as_view(), name='Delete upcoming events'),
+    path('eventupdate/',EventsUpdate.as_view(), name='Update existing event'),
 
     # Slideshow event urls
     path('getslideshow/',SlideList.as_view(), name='get all the slideshow'),
@@ -35,6 +38,7 @@ urlpatterns = [
     # path('scripturepost', views.ScripturesListAPIView.as_view(), name='delete one scripture')
 
     # Last Episode
-    path('lastepisodegetlist/',LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5')
+    path('lastepisodegetlist/',LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5'),
+    path('lastepisodechange/<int:pk>', LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5'),
 
-    ]
+]
