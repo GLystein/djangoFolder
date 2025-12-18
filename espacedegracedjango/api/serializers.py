@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import SubscribersList, LastestEpisodes
-from .models import ScriptureList
+from .models import SubscribersList
+from .models import ScriptureList, LastestEpisodes
 from .models import StoreProductItems
 from .models import ThemeCategory
 from .models import UpcomingEvents

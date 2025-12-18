@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime, timedelta, date
 
 class SubscribersList(models.Model):
     firstName = models.CharField(max_length=200, default="")
@@ -6,6 +7,9 @@ class SubscribersList(models.Model):
     email = models.CharField(max_length=200)
     subscribType = models.CharField(max_length=200, default="")
     startedDate = models.DateTimeField(auto_now_add=True)
+    endDate = models.DateTimeField(null=True, blank=True) #auto_now_add=True,
+    # endDate = models.DateTimeField(default= "2023-10-27 10:30:00Z",blank=True)
+    # endDate = models.DateField(default=date.today() + timedelta(days=14))
 
     def __str__(self):
         return self.firstName
@@ -60,3 +64,5 @@ class LastestEpisodes(models.Model):
     guestSpeaker = models.CharField(max_length=40)
     publicationDate = models.DateTimeField(blank=True)
     thumbnail = models.ImageField(default='fallback.jpg', blank=True)
+
+# class

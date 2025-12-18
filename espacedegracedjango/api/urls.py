@@ -1,14 +1,13 @@
 from django.urls import path
-from . import views
-from .views import ScriptureListCreate, SubscribersListDetail, ScripturePostDelete, LastestEpisodesList
+from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList
 from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsUpdate
 from .views import ThemeScripture, ThemeList, SlideList, SlideShowPost, slideShowDeletion
-from .views import ItemsDeletion
+from .views import ItemsDeletion, SubscribersListDetail, SubscribersListCreate
 
 # from .views import
 
 urlpatterns = [
-    path("subscriberslist/", views.SubscribersListCreate.as_view(), name='list-of-subcribers'),
+    path("subscriberslist/", SubscribersListCreate.as_view(), name='list-of-subcribers'),
     path('subscribersdetails/<int:pk>/', SubscribersListDetail.as_view(), name='list Of Subscribers Detail'),
 
     #

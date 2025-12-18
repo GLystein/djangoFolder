@@ -2,8 +2,10 @@ from django.shortcuts import render
 from rest_framework import generics,viewsets, parsers
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
-from .models import SubscribersList, LastestEpisodes
-from .serializers import SubscribersListSerializer, LastestEpisodesSerializer
+from .models import LastestEpisodes
+from .models import SubscribersList
+from .serializers import LastestEpisodesSerializer
+from .serializers import SubscribersListSerializer
 from .models import ScriptureList
 from .serializers import ScriptureListSerializer
 from .serializers import StoreProductItemsSerializer
@@ -14,7 +16,11 @@ from .serializers import UpcomingEventsSerializer
 from .models import UpcomingEvents
 from .models import SlideshowsImage
 from .serializers import SlideshowsImageSerializer
+from .models import  SubscribersList
 
+# record_to_delete = SubscribersList.objects.get(id=1)
+SubscribersList.objects.all().delete()
+# record_to_delete.delete()
 # --------------------------------------------SUBSCRIBERS--------------------------------------------------------
 class SubscribersListCreate(generics.ListCreateAPIView):
     queryset = SubscribersList.objects.all()
