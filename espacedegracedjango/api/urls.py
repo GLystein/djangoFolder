@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList
+from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList, LastestEpisodesUpdate
 from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsUpdate
 from .views import ThemeScripture, ThemeList, SlideList, SlideShowPost, slideShowDeletion
 from .views import ItemsDeletion, SubscribersListDetail, SubscribersListCreate
@@ -38,6 +38,6 @@ urlpatterns = [
 
     # Last Episode
     path('lastepisodegetlist/',LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5'),
-    path('lastepisodechange/<int:pk>', LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5'),
+    path('lastepisodechange/<int:pk>', LastestEpisodesUpdate.as_view(), name='Get All the Last Episodes List max 5'),
 
 ]

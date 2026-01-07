@@ -3,7 +3,6 @@ from rest_framework import generics,viewsets, parsers
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 from .models import LastestEpisodes
-from .models import SubscribersList
 from .serializers import LastestEpisodesSerializer
 from .serializers import SubscribersListSerializer
 from .models import ScriptureList
@@ -108,7 +107,13 @@ class slideShowDeletion(generics.RetrieveUpdateDestroyAPIView):
 
 
 #-------------------------------------Last Episode--------------------------------------------------------------
-class LastestEpisodesList(generics.RetrieveUpdateDestroyAPIView):
+
+class LastestEpisodesList(generics.ListCreateAPIView):
+# class LastestEpisodesList(generics.ListCreateAPIView):
+    queryset = LastestEpisodes.objects.all();
+    serializer_class = LastestEpisodesSerializer
+
+class LastestEpisodesUpdate(generics.RetrieveUpdateDestroyAPIView):
 # class LastestEpisodesList(generics.ListCreateAPIView):
     queryset = LastestEpisodes.objects.all();
     serializer_class = LastestEpisodesSerializer
