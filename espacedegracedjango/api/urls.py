@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList, LastestEpisodesUpdate
+from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList, LastestEpisodesUpdate, FirstEpisodeID
 from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsUpdate
 from .views import ThemeScripture, ThemeList, SlideList, SlideShowPost, slideShowDeletion
-from .views import ItemsDeletion, SubscribersListDetail, SubscribersListCreate
+from .views import ItemsDeletion, SubscribersListDetail, SubscribersListCreate, FirstLatestEpisode
+from .views import FirstLatestEpisodeID
 
 # from .views import
 
@@ -39,5 +40,12 @@ urlpatterns = [
     # Last Episode
     path('lastepisodegetlist/',LastestEpisodesList.as_view(), name='Get All the Last Episodes List max 5'),
     path('lastepisodechange/<int:pk>', LastestEpisodesUpdate.as_view(), name='Get All the Last Episodes List max 5'),
+
+    # First Episode
+    path('firstlatestepisode/<int:pk>',FirstLatestEpisode.as_view(), name='Get the First Episode'),
+
+    # Get the ID
+    path('firstlatestepisodeid/<int:pk>',FirstLatestEpisodeID.as_view(), name='ID of the first latest episode'),
+    path('firstepisodeid/',FirstEpisodeID.as_view(), name='ID of the first latest episode')
 
 ]

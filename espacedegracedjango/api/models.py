@@ -65,4 +65,5 @@ class LastestEpisodes(models.Model):
     publicationDate = models.DateTimeField(blank=True)
     thumbnail = models.ImageField(default='fallback.jpg', blank=True)
 
-# class
+class FirstLatestEpisodeId(models.Model):
+    episodeId = models.CharField(blank=True)

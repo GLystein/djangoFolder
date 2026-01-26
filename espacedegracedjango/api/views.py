@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics,viewsets, parsers
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
-from .models import LastestEpisodes
-from .serializers import LastestEpisodesSerializer
+from .models import LastestEpisodes, FirstLatestEpisodeId
+from .serializers import LastestEpisodesSerializer, FirstLatestEpisodeIdSerializer
 from .serializers import SubscribersListSerializer
 from .models import ScriptureList
 from .serializers import ScriptureListSerializer
@@ -117,3 +117,15 @@ class LastestEpisodesUpdate(generics.RetrieveUpdateDestroyAPIView):
 # class LastestEpisodesList(generics.ListCreateAPIView):
     queryset = LastestEpisodes.objects.all();
     serializer_class = LastestEpisodesSerializer
+
+class FirstLatestEpisode(generics.RetrieveUpdateDestroyAPIView):
+    queryset = LastestEpisodes.objects.all();
+    serializer_class = LastestEpisodesSerializer
+
+class FirstLatestEpisodeID(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FirstLatestEpisodeId.objects.all();
+    serializer_class =  FirstLatestEpisodeIdSerializer
+
+class FirstEpisodeID(generics.ListCreateAPIView):
+    queryset = FirstLatestEpisodeId.objects.all();
+    serializer_class = FirstLatestEpisodeIdSerializer

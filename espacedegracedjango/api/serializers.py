@@ -6,6 +6,7 @@ from .models import ThemeCategory
 from .models import UpcomingEvents
 from .models import SlideshowsImage
 from .models import UpcomingEvents
+from .models import FirstLatestEpisodeId
 
 class SubscribersListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,4 +45,9 @@ class LastestEpisodesSerializer(serializers.ModelSerializer):
 class EventsUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = UpcomingEvents
+        fields = '__all__'
+
+class FirstLatestEpisodeIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FirstLatestEpisodeId
         fields = '__all__'
