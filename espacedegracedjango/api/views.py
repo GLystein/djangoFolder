@@ -18,7 +18,8 @@ from .serializers import SlideshowsImageSerializer
 from .models import  SubscribersList
 
 # record_to_delete = SubscribersList.objects.get(id=1)
-SubscribersList.objects.all().delete()
+# SubscribersList.objects.all().delete()
+
 # record_to_delete.delete()
 # --------------------------------------------SUBSCRIBERS--------------------------------------------------------
 class SubscribersListCreate(generics.ListCreateAPIView):

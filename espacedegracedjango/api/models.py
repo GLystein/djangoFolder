@@ -53,6 +53,7 @@ class UpcomingEvents(models.Model):
     topic = models.CharField(max_length=50,blank=True)
     description = models.CharField(max_length=300, blank=True)
     image = models.ImageField(default='fallback.jpg', blank=True)
+    location = models.CharField(max_length=100, blank=True, default="")
 
 class SlideshowsImage(models.Model):
     sliderImage = models.ImageField(default='fallback.jpg', blank=True)
