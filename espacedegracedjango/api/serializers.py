@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SubscribersList
+from .models import SubscribersList, Episode
 from .models import ScriptureList, LastestEpisodes
 from .models import StoreProductItems
 from .models import ThemeCategory
@@ -7,6 +7,8 @@ from .models import UpcomingEvents
 from .models import SlideshowsImage
 from .models import UpcomingEvents
 from .models import FirstLatestEpisodeId
+from .models import Episode
+from .models import GuestSpeaker
 
 class SubscribersListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,3 +53,14 @@ class FirstLatestEpisodeIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = FirstLatestEpisodeId
         fields = '__all__'
+
+class EpisodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Episode
+        fields = '__all__'
+
+class GuestSpeakerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GuestSpeaker
+        fields = '__all__'
+        read_only_fields = ['created_at']

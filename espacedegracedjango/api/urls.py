@@ -1,11 +1,17 @@
-from django.urls import path
-from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList, LastestEpisodesUpdate, FirstEpisodeID
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+from .views import ScriptureListCreate, ScripturePostDelete, LastestEpisodesList, LastestEpisodesUpdate, FirstEpisodeID, \
+    GuestSpeakerViewSet
 from .views import StoreItems, AddingScripturePosting, GetUpcomingEvents, EventsUpdate
 from .views import ThemeScripture, ThemeList, SlideList, SlideShowPost, slideShowDeletion
 from .views import ItemsDeletion, SubscribersListDetail, SubscribersListCreate, FirstLatestEpisode
-from .views import FirstLatestEpisodeID
+from .views import FirstLatestEpisodeID, Episode, GuestSpeakerViewSet
+
 
 # from .views import
+router = DefaultRouter()
+router.register(r'speakers', GuestSpeakerViewSet)
 
 urlpatterns = [
     path("subscriberslist/", SubscribersListCreate.as_view(), name='list-of-subcribers'),
@@ -46,6 +52,11 @@ urlpatterns = [
 
     # Get the ID
     path('firstlatestepisodeid/<int:pk>',FirstLatestEpisodeID.as_view(), name='ID of the first latest episode'),
-    path('firstepisodeid/',FirstEpisodeID.as_view(), name='ID of the first latest episode')
+    path('firstepisodeid/',FirstEpisodeID.as_view(), name='ID of the first latest episode'),
+
+    # Episode
+    path('episode/', Episode.as_view(), name='Liste of All Episode'),
+    path('guestspeakers/',GuestSpeakerViewSet.as_view(),name='Get speakers')
+    # path('guestspeakers/',include(router.urls),name='Get speakers')
 
 ]

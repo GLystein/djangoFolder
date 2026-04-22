@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from datetime import datetime, timedelta, date
 
@@ -68,3 +69,31 @@ class LastestEpisodes(models.Model):
 
 class FirstLatestEpisodeId(models.Model):
     episodeId = models.CharField(blank=True)
+
+class Episode(models.Model):
+    episodeId = models.CharField(max_length=10)
+    title = models.CharField(max_length=150)
+    description = models.TextField()
+    air_Date = models.DateTimeField()
+    duration = models.IntegerField()
+    media_url = models.URLField(blank=True)
+    guests_array = models.ManyToManyField('GuestSpeaker', blank=True)
+    # guest = ArrayField(models.CharField(max_length=100), blank=True, size= 8)
+    status = models.BooleanField(default=False)
+    images = models.ImageField(default='fallback.jpg', blank=True)
+
+class GuestSpeaker(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True, blank=True)
+    Minister_title = models.CharField(max_length=200)
+    company_church = models.CharField(max_length=200,blank=True)
+    bio = models.TextField(help_text="Full professional biography")
+    headshot = models.ImageField(upload_to='speakers/', blank=True, null=True)
+    linkedin_url = models.URLField(blank=True)
+    expertise = models.JSONField(default=list)  # List of tags or topics
+    is_confirmed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

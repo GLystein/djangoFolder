@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import generics,viewsets, parsers
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
-from .models import LastestEpisodes, FirstLatestEpisodeId
-from .serializers import LastestEpisodesSerializer, FirstLatestEpisodeIdSerializer
+from .models import LastestEpisodes, FirstLatestEpisodeId, GuestSpeaker
+from .serializers import LastestEpisodesSerializer, FirstLatestEpisodeIdSerializer, EpisodeSerializer, \
+    GuestSpeakerSerializer
 from .serializers import SubscribersListSerializer
 from .models import ScriptureList
 from .serializers import ScriptureListSerializer
@@ -16,6 +17,10 @@ from .models import UpcomingEvents
 from .models import SlideshowsImage
 from .serializers import SlideshowsImageSerializer
 from .models import  SubscribersList
+from .models import Episode
+from .serializers import EpisodeSerializer
+from .models import GuestSpeaker
+from .serializers import GuestSpeakerSerializer
 
 # record_to_delete = SubscribersList.objects.get(id=1)
 # SubscribersList.objects.all().delete()
@@ -130,3 +135,17 @@ class FirstLatestEpisodeID(generics.RetrieveUpdateDestroyAPIView):
 class FirstEpisodeID(generics.ListCreateAPIView):
     queryset = FirstLatestEpisodeId.objects.all();
     serializer_class = FirstLatestEpisodeIdSerializer
+
+#-------------------------------------Episode--------------------------------------------------------------
+
+class Episode(generics.ListCreateAPIView):
+    queryset = Episode.objects.all();
+    serializer_class = EpisodeSerializer
+
+# class GuestSpeakerViewSet(viewsets.ModelViewSet):
+#     queryset = GuestSpeaker.objects.all()
+#     serializer_class = GuestSpeakerSerializer
+
+class GuestSpeakerViewSet(generics.ListCreateAPIView):
+    queryset = GuestSpeaker.objects.all();
+    serializer_class = GuestSpeakerSerializer
