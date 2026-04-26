@@ -1,6 +1,10 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from datetime import datetime, timedelta, date
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+# from imageio.config.plugins import summary
+
 
 class SubscribersList(models.Model):
     firstName = models.CharField(max_length=200, default="")
@@ -64,28 +68,28 @@ class LastestEpisodes(models.Model):
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=200)
     guestSpeaker = models.CharField(max_length=40)
-    publicationDate = models.DateTimeField(blank=True)
+    publicationDate = models.DateTimeField(blank=True,null=True)
     thumbnail = models.ImageField(default='fallback.jpg', blank=True)
+    synced_at = models.DateTimeField(auto_now_add=True)
+    episode_num = models.IntegerField()
+
+    class Meta:
+        ordering = ['-synced_at']
 
 class FirstLatestEpisodeId(models.Model):
     episodeId = models.CharField(blank=True)
 
-class Episode(models.Model):
-    episodeId = models.CharField(max_length=10)
-    title = models.CharField(max_length=150)
-    description = models.TextField()
-    air_Date = models.DateTimeField()
-    duration = models.IntegerField()
-    media_url = models.URLField(blank=True)
-    guests_array = models.ManyToManyField('GuestSpeaker', blank=True)
-    # guest = ArrayField(models.CharField(max_length=100), blank=True, size= 8)
-    status = models.BooleanField(default=False)
-    images = models.ImageField(default='fallback.jpg', blank=True)
+def get_next_episode_id():
+    last_episode = Episode.objects.all().order_by('episodeId').last()
+    if not last_episode:
+        return 20250001
+    return last_episode.episodeId+1
+
 
 class GuestSpeaker(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True, blank=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
     Minister_title = models.CharField(max_length=200)
     company_church = models.CharField(max_length=200,blank=True)
     bio = models.TextField(help_text="Full professional biography")
@@ -97,3 +101,52 @@ class GuestSpeaker(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Episode(models.Model):
+    episodeId = models.IntegerField(default=get_next_episode_id,unique = True, editable=False)
+    # unique = True
+    title = models.CharField(max_length=150)
+    description = models.TextField()
+    air_Date = models.DateTimeField()
+    duration = models.IntegerField()
+    media_url = models.URLField(blank=True)
+    # guests_array = models.ManyToManyField('GuestSpeaker', through='EpisodeGuestAssignment')
+    guests_array = models.ManyToManyField('GuestSpeaker', blank=True)
+    # guest = ArrayField(models.CharField(max_length=100), blank=True, size= 8)
+    status = models.BooleanField(default=False)
+    images = models.ImageField(default='fallback.jpg', blank=True)
+    slideImage = models.ImageField(default='fallback.jpg', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Determine if this is a new object creation
+        is_new = self.pk is None
+        super().save(*args, **kwargs)  # Save the Product first
+
+        if is_new:
+            slideshowAdding = SlideshowsImage.objects.create(
+                sliderImage = self.slideImage,
+                topic = self.title
+            )
+# class EpisodeGuestAssignment(models.Model):
+#     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+#     speaker = models.ForeignKey(GuestSpeaker, on_delete=models.CASCADE)
+#     role = models.CharField(max_length=100) # Example of an extra field
+
+@receiver(post_save, sender=Episode)
+def sync_latest_episodes(sender, instance, created, **kwargs):
+    if created:
+        # 1. Manually map fields from Episode to LastestEpisodes
+        LastestEpisodes.objects.create(
+            episode_num=instance.episodeId,
+            title=instance.title
+        )
+
+        # 2. Keep only the 5 most recent records
+        # all_entries = LastestEpisodes.objects.all().order_by('-synced_at')
+        all_entries = LastestEpisodes.objects.all().order_by('-id')
+        if all_entries.count() > 5:
+            # Get the IDs of the 5 newest
+            ids_to_keep = all_entries.values_list('id', flat=True)[:5]
+            # Delete anything not in that list
+            LastestEpisodes.objects.exclude(id__in=ids_to_keep).delete()

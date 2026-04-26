@@ -21,6 +21,7 @@ from .models import Episode
 from .serializers import EpisodeSerializer
 from .models import GuestSpeaker
 from .serializers import GuestSpeakerSerializer
+# from .models import Log
 
 # record_to_delete = SubscribersList.objects.get(id=1)
 # SubscribersList.objects.all().delete()
@@ -149,3 +150,15 @@ class Episode(generics.ListCreateAPIView):
 class GuestSpeakerViewSet(generics.ListCreateAPIView):
     queryset = GuestSpeaker.objects.all();
     serializer_class = GuestSpeakerSerializer
+
+# def save_last_item_view(request):
+#     last_episode = Episode.objects.last()
+#     if last_episode:
+#         new_log = Log.objects.create(
+#             message = f"LAst episode found: {last_episode.title}",
+#             reference_id = last_episode.id
+#         )
+#         status = "Items Saved to another model"
+#     else:
+#         status = "Items found in product model"
+#     return render(request, 'status.html', {'status': status})
