@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from datetime import datetime, timedelta, date
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 # from imageio.config.plugins import summary
 
@@ -67,7 +67,8 @@ class SlideshowsImage(models.Model):
 class LastestEpisodes(models.Model):
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=200)
-    guestSpeaker = models.CharField(max_length=40)
+    # guestSpeaker = models.CharField(max_length=50,null=True)
+    guestSpeaker = models.ManyToManyField('GuestSpeaker', blank=True)
     publicationDate = models.DateTimeField(blank=True,null=True)
     thumbnail = models.ImageField(default='fallback.jpg', blank=True)
     synced_at = models.DateTimeField(auto_now_add=True)
@@ -133,20 +134,50 @@ class Episode(models.Model):
 #     speaker = models.ForeignKey(GuestSpeaker, on_delete=models.CASCADE)
 #     role = models.CharField(max_length=100) # Example of an extra field
 
-@receiver(post_save, sender=Episode)
-def sync_latest_episodes(sender, instance, created, **kwargs):
-    if created:
-        # 1. Manually map fields from Episode to LastestEpisodes
-        LastestEpisodes.objects.create(
-            episode_num=instance.episodeId,
-            title=instance.title
+# @receiver(post_save, sender=Episode)
+# def sync_latest_episodes(sender, instance, created, **kwargs):
+#     if created:
+#         # 1. Manually map fields from Episode to LastestEpisodes
+#         LastestEpisodes.objects.create(
+#             episode_num=instance.episodeId,
+#             title=instance.title,
+#             summary = instance.description,
+#             guestSpeaker = instance.guests_array.first(),
+#             publicationDate = instance.air_Date,
+#             thumbnail = instance.images
+#         )
+#
+#         # 2. Keep only the 5 most recent records
+#         # all_entries = LastestEpisodes.objects.all().order_by('-synced_at')
+#         all_entries = LastestEpisodes.objects.all().order_by('-id')
+#         if all_entries.count() > 5:
+#             # Get the IDs of the 5 newest
+#             ids_to_keep = all_entries.values_list('id', flat=True)[:5]
+#             # Delete anything not in that list
+#             LastestEpisodes.objects.exclude(id__in=ids_to_keep).delete()
+
+@receiver(m2m_changed, sender=Episode.guests_array.through)
+def sync_latest_with_guests(sender, instance, action, **kwargs):
+    # 'post_add' means the speakers have been successfully linked to the Episode
+    if action == "post_add":
+        # 1. Create or Update the LatestEpisode entry
+        latest, created = LastestEpisodes.objects.get_or_create(
+            # episode_num=instance.episodeId,
+            # defaults={'short_title': instance.title},
+            episode_num = instance.episodeId,
+            title = instance.title,
+            summary = instance.description,
+            # guestSpeaker = instance.guests_array.first(),
+            publicationDate = instance.air_Date,
+            thumbnail = instance.images
         )
 
-        # 2. Keep only the 5 most recent records
-        # all_entries = LastestEpisodes.objects.all().order_by('-synced_at')
-        all_entries = LastestEpisodes.objects.all().order_by('-id')
-        if all_entries.count() > 5:
-            # Get the IDs of the 5 newest
-            ids_to_keep = all_entries.values_list('id', flat=True)[:5]
-            # Delete anything not in that list
+        # 2. Copy the speakers from the Episode to the LatestEpisode
+        # .set() replaces existing speakers with the current list from the Episode
+        latest.guestSpeaker.set(instance.guests_array.all())
+
+        # 3. Maintain the "Last 5" limit
+        all_latest = LastestEpisodes.objects.all().order_by('-synced_at')
+        if all_latest.count() > 5:
+            ids_to_keep = all_latest.values_list('id', flat=True)[:5]
             LastestEpisodes.objects.exclude(id__in=ids_to_keep).delete()
